@@ -17,7 +17,6 @@ export const LogoutButton = () => {
               toast.success("Logged out successfully");
             },
             onError: (ctx) => {
-              toast.error("Failed to log out");
               toast.error(`Error: ${ctx.error.message}`);
             },
           },

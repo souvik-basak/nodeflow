@@ -4,7 +4,8 @@ import "./globals.css";
 import { TRPCReactProvider } from "@/trpc/client";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
-import {Toaster} from "sonner";
+import { Toaster } from "sonner";
+import { SmoothScroll } from "@/components/smooth-scroll";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
       >
         <TRPCReactProvider>
           <ThemeProvider>
+            <SmoothScroll />
             <div className="fixed right-4 top-4 z-50">
               <ThemeToggle />
             </div>
