@@ -17,7 +17,6 @@ export function SmoothScroll() {
       duration: 1.1,
       lerp: 0.08,
       smoothWheel: true,
-      smoothTouch: false,
       wheelMultiplier: 0.9,
     });
 

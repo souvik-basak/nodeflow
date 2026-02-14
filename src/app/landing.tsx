@@ -432,7 +432,7 @@ const LandingPage = () => {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5 }}
               >
-                <p className="text-sm text-muted-foreground">“{story.quote}”</p>
+                <p className="text-sm text-muted-foreground">"{story.quote}"</p>
                 <div className="mt-4 text-sm font-semibold">{story.name}</div>
                 <div className="text-xs text-muted-foreground">
                   {story.role}
@@ -540,7 +540,7 @@ const LandingPage = () => {
                 },
                 {
                   name: "Enterprise",
-                  price: "Let’s talk",
+                  price: "Let's talk",
                   blurb: "For regulated or multi-org teams.",
                   perks: ["SAML + SCIM", "Custom SLAs", "Dedicated success"],
                 },
@@ -569,7 +569,7 @@ const LandingPage = () => {
                   </p>
                   <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
                     {tier.perks.map((perk) => (
-                      <li key={perk}>• {perk}</li>
+                      <li key={perk}>* {perk}</li>
                     ))}
                   </ul>
                   <motion.div
@@ -626,7 +626,7 @@ const LandingPage = () => {
       <footer className="border-t border-border py-8">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
           <div className="flex flex-col gap-2">
-            <span>© 2026 NodeFlow. All rights reserved.</span>
+            <span>(c) 2026 NodeFlow. All rights reserved.</span>
             <div className="flex items-center gap-2 text-xs">
               <span className="h-2 w-2 rounded-full bg-emerald-500" />
               <span>All systems operational</span>
