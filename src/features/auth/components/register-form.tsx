@@ -33,7 +33,15 @@ import { authClient } from "@/lib/auth-client";
 
 const RegisterSchema = z
   .object({
-    name: z.string().min(2, "Name must be at least 2 characters long"),
+    name: z
+      .string()
+      .trim()
+      .min(2, "Name must be at least 2 characters long")
+      .max(50, "Name must be at most 50 characters long")
+      .regex(
+        /^[\p{L}]+(?:[ '\-.][\p{L}]+)*\.?$/u,
+        "Name can only include letters, spaces, hyphens, apostrophes, and periods",
+      ),
     email: z.string().email("Please enter a valid email address"),
     password: z
       .string()
@@ -241,6 +249,17 @@ export function RegisterForm() {
           </Form>
         </CardContent>
       </Card>
+      <div className="text-center text-sm text-muted-foreground">
+        By signing up, you agree to our{" "}
+        <Link href="/terms" className="underline hover:text-foreground">
+          Terms of Service
+        </Link>{" "}
+        and{" "}
+        <Link href="/privacy" className="underline hover:text-foreground">
+          Privacy Policy
+        </Link>
+        .
+      </div>
     </div>
   );
 }

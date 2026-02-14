@@ -101,6 +101,18 @@ export function LoginForm() {
                     <span>Continue with Google</span>
                   </Button>
                 </div>
+                <div>
+                  <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <span className="w-full border-t" />
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                      <span className="bg-background px-2 text-muted-foreground">
+                        Or continue with
+                      </span>
+                    </div>
+                  </div>
+                </div>
                 <div className="grid gap-6">
                   <FormField
                     control={form.control}
@@ -185,6 +197,17 @@ export function LoginForm() {
           </Form>
         </CardContent>
       </Card>
+      <div className="text-center text-sm text-muted-foreground">
+        By logging in, you agree to our{" "}
+        <Link href="/terms" className="underline hover:text-foreground">
+          Terms of Service
+        </Link>{" "}
+        and{" "}
+        <Link href="/privacy" className="underline hover:text-foreground">
+          Privacy Policy
+        </Link>
+        .
+      </div>
     </div>
   );
 }
