@@ -39,7 +39,7 @@ export default function RootLayout({
               <ThemeToggle />
             </div>
             {children}
-            <Toaster position="bottom-right" />
+            <Toaster position="top-right" />
           </ThemeProvider>
         </TRPCReactProvider>
       </body>

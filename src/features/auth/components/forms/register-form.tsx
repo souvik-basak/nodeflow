@@ -94,14 +94,14 @@ export function RegisterForm() {
         name: normalizedName,
         email: values.email,
         password: values.password,
-        callbackURL: `/`,
+        callbackURL: `/login`,
       },
       {
         onSuccess: () => {
           toast.success(
-            "Account created successfully! Please check your email to verify your account.",
+            "Account created successfully! Please check your email to verify your account. If you do not see it, check your spam or junk folder.",
           );
-          router.push("/");
+          router.push("/login");
         },
         onError: (ctx) => {
           toast.error(`Failed to create account: ${ctx.error.message}`);
@@ -145,6 +145,16 @@ export function RegisterForm() {
                     <FaGoogle className="mr-2" />
                     <span>Continue with Google</span>
                   </Button>
+                </div>
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                  </div>
+                  <div className="relative flex justify-center text-xs">
+                    <span className="bg-background px-2 text-muted-foreground">
+                      Or Continue With
+                    </span>
+                  </div>
                 </div>
                 <div className="grid gap-6">
                   <FormField

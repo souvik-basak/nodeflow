@@ -1,10 +1,10 @@
-import { LoginForm } from "@/features/auth/components/forms/login-form";
+import { ResetPasswordForm } from "@/features/auth/components/forms/reset-password-form";
 import { requireUnauth } from "@/lib/auth-utils";
 
 const Page = async () => {
   await requireUnauth();
 
-  return <LoginForm />;
+  return <ResetPasswordForm />;
 };
 
 export default Page;
