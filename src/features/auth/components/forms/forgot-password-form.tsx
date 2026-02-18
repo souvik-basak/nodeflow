@@ -41,15 +41,33 @@ export function ForgotPasswordForm() {
   });
 
   const onSubmit = async (values: ForgotPasswordFormValues) => {
-    setSubmittedEmail(values.email);
-    const { error} = await authClient.requestPasswordReset({
-      email: values.email,
-      redirectTo: `${window.location.origin}/reset-password`
-    })
-    if (error) {
-      toast.error("Failed to send reset instructions.");
-    } else {
-      toast.success(`Reset instructions were sent to ${values.email}.`);
+    try {
+      // Check if email exists in database
+      const response = await fetch("/api/auth/check-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: values.email }),
+      });
+
+      const data = await response.json();
+
+      if (!data.exists) {
+        toast.error("No account found with this email address.");
+        return;
+      }
+
+      setSubmittedEmail(values.email);
+      const { error } = await authClient.requestPasswordReset({
+        email: values.email,
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      if (error) {
+        toast.error("Failed to send reset instructions.");
+      } else {
+        toast.success(`Reset instructions were sent to ${values.email}.`);
+      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
     }
   };
 
