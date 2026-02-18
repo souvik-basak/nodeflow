@@ -3,8 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
@@ -28,8 +28,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {authClient} from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -40,7 +42,9 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
+  const hasShownVerificationToast = useRef(false);
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -49,20 +53,46 @@ export function LoginForm() {
     },
   });
 
+  useEffect(() => {
+    const verifiedParam = searchParams.get("verified");
+    const isVerified = verifiedParam === "1" || verifiedParam === "true";
+
+    if (isVerified && !hasShownVerificationToast.current) {
+      hasShownVerificationToast.current = true;
+      toast.success("Email verified. Please log in.");
+
+      const nextParams = new URLSearchParams(searchParams.toString());
+      nextParams.delete("verified");
+      const nextQuery = nextParams.toString();
+      const timeoutId = window.setTimeout(() => {
+        router.replace(nextQuery ? `/login?${nextQuery}` : "/login");
+      }, 150);
+
+      return () => window.clearTimeout(timeoutId);
+    }
+  }, [router, searchParams]);
+
+  const verifyInvalid = searchParams.get("verifyInvalid") === "1";
+
   const onSubmit = async (values: LoginFormValues) => {
-    await authClient.signIn.email({
-      email: values.email,
-      password: values.password,
-      callbackURL: "/"
-    },{
-      onSuccess: ()=>{
-        router.push("/");
-        toast.success("Logged in successfully!");
+    await authClient.signIn.email(
+      {
+        email: values.email,
+        password: values.password,
+        callbackURL: "/",
       },
-        onError:(ctx)=> {
-          toast.error(ctx.error.message || "Failed to log in. Please try again.");
-        }
-    })
+      {
+        onSuccess: () => {
+          router.push("/");
+          toast.success("Logged in successfully!");
+        },
+        onError: (ctx) => {
+          toast.error(
+            ctx.error.message || "Failed to log in. Please try again.",
+          );
+        },
+      },
+    );
   };
 
   const isPending = form.formState.isSubmitting;
@@ -75,6 +105,15 @@ export function LoginForm() {
           <CardDescription>Login to your account to continue</CardDescription>
         </CardHeader>
         <CardContent>
+          {verifyInvalid && (
+            <Alert variant="destructive" className="mb-6">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                This verification link is invalid or expired. Please request a
+                new verification link.
+              </AlertDescription>
+            </Alert>
+          )}
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}

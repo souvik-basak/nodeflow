@@ -24,9 +24,9 @@ const VerifyEmail = (props: VerifyEmailProps) => {
       <Tailwind>
         <Head />
         <Body className="bg-gray-100 font-sans px-4 py-8">
-          <Container className="bg-white rounded-xl shadow-sm w-full max-w-[600px] mx-auto p-6">
+          <Container className="bg-white rounded-xl shadow-sm w-full max-w-150 mx-auto p-6">
             <Section>
-              <Text className="text-[28px] leading-[34px] font-bold text-gray-900 mb-6 text-center">
+              <Text className="text-[28px] leading-8.5 font-bold text-gray-900 mb-6 text-center">
                 Verify Your Email Address
               </Text>
 

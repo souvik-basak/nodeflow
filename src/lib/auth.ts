@@ -13,18 +13,22 @@ export const auth = betterAuth({
   }),
   emailVerification: {
     sendVerificationEmail: async ({ user, url }) => {
+      const verificationUrl = new URL(url);
+      const wrappedUrl = new URL("/verify-email", verificationUrl.origin);
+      wrappedUrl.searchParams.set("verifyUrl", verificationUrl.toString());
+
       await resend.emails.send({
         from: "NodeFlow <hello@nodeflow.souvikbasak.in>",
         to: user.email,
         subject: "Verify your email address",
         react: VerifyEmail({
-          verificationLink: url,
+          verificationLink: wrappedUrl.toString(),
           username: user.name,
         }),
       });
     },
     sendOnSignUp: true,
-    autoSignInAfterVerification: true,
+    autoSignInAfterVerification: false,
   },
   emailAndPassword: {
     enabled: true,
@@ -39,7 +43,7 @@ export const auth = betterAuth({
           username: user.name,
           userEmail: user.email,
           resetUrl: url,
-        })
+        }),
       });
     },
   },
