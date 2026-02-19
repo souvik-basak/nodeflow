@@ -2,7 +2,16 @@ import { inngest } from "@/inngest/client";
 import { createTRPCRouter, protectedProcedure, baseProcedure } from "../init";
 import prisma from "@/lib/db";
 import { z } from "zod";
+
 export const appRouter = createTRPCRouter({
+  testAi: protectedProcedure.mutation(async () => {
+    await inngest.send({
+      name: "execute/ai",
+    })
+
+    return { success: true, message: "job queued" };
+  }),
+
   getUsers: protectedProcedure.query(({ ctx }) => {
     return prisma.user.findMany({
       where: {
