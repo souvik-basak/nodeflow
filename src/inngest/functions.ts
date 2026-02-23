@@ -42,6 +42,11 @@ export const execute = inngest.createFunction(
         system: "You are a helpful assistant.",
         prompt: "what is 2+2",
         model: google("gemini-2.5-flash"),
+        experimental_telemetry: {
+          isEnabled: true,
+          recordInputs: true,
+          recordOutputs: true,
+        },
       },
     );
 
@@ -52,6 +57,11 @@ export const execute = inngest.createFunction(
         system: "You are a helpful assistant.",
         prompt: "what is 2+2",
         model: groq("llama-3.1-8b-instant"),
+        experimental_telemetry: {
+          isEnabled: true,
+          recordInputs: true,
+          recordOutputs: true,
+        },
       },
     );
 
@@ -62,6 +72,11 @@ export const execute = inngest.createFunction(
         system: "You are a helpful assistant.",
         prompt: "what is 2+2",
         model: openai("gpt-5"),
+        experimental_telemetry: {
+          isEnabled: true,
+          recordInputs: true,
+          recordOutputs: true,
+        },
       },
     );
 
@@ -72,6 +87,11 @@ export const execute = inngest.createFunction(
         system: "You are a helpful assistant.",
         prompt: "what is 2+2",
         model: anthropic("claude-opus-4-6"),
+        experimental_telemetry: {
+          isEnabled: true,
+          recordInputs: true,
+          recordOutputs: true,
+        },
       },
     );
 
@@ -82,6 +102,11 @@ export const execute = inngest.createFunction(
         system: "You are a helpful assistant.",
         prompt: "what is 2+2",
         model: mistral("mistral-large-latest"),
+        experimental_telemetry: {
+          isEnabled: true,
+          recordInputs: true,
+          recordOutputs: true,
+        },
       },
     );
 
@@ -92,6 +117,11 @@ export const execute = inngest.createFunction(
         system: "You are a helpful assistant.",
         prompt: "what is 2+2",
         model: huggingFace("meta-llama/Llama-3.1-405B-Instruct"),
+        experimental_telemetry: {
+          isEnabled: true,
+          recordInputs: true,
+          recordOutputs: true,
+        },
       },
     );
 
@@ -102,6 +132,11 @@ export const execute = inngest.createFunction(
         system: "You are a helpful assistant.",
         prompt: "what is 2+2",
         model: cohere("command-r-plus"),
+        experimental_telemetry: {
+          isEnabled: true,
+          recordInputs: true,
+          recordOutputs: true,
+        },
       },
     );
 
@@ -112,6 +147,11 @@ export const execute = inngest.createFunction(
         system: "You are a helpful assistant.",
         prompt: "what is 2+2",
         model: deepSeek("deepseek-chat"),
+        experimental_telemetry: {
+          isEnabled: true,
+          recordInputs: true,
+          recordOutputs: true,
+        },
       },
     );
 
@@ -122,6 +162,11 @@ export const execute = inngest.createFunction(
         system: "You are a helpful assistant.",
         prompt: "what is 2+2",
         model: perplexity("sonar-pro"),
+        experimental_telemetry: {
+          isEnabled: true,
+          recordInputs: true,
+          recordOutputs: true,
+        },
       },
     );
 
