@@ -79,11 +79,11 @@ export function LoginForm() {
       {
         email: values.email,
         password: values.password,
-        callbackURL: "/",
+        callbackURL: "/workflows",
       },
       {
         onSuccess: () => {
-          router.push("/");
+          router.push("/workflows");
           toast.success("Logged in successfully!");
         },
         onError: (ctx) => {
