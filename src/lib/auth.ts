@@ -4,6 +4,9 @@ import prisma from "@/lib/db";
 import { Resend } from "resend";
 import VerifyEmail from "@/components/emails/verify-email";
 import ForgotPasswordEmail from "@/components/emails/forgot-password-email";
+import { polar, checkout, portal, usage, webhooks } from "@polar-sh/better-auth";
+import { polarClient } from "./polar";
+
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
@@ -58,5 +61,24 @@ export const auth = betterAuth({
   //     clientId: process.env.GITHUB_CLIENT_ID!,
   //     clientSecret: process.env.GITHUB_CLIENT_SECRET!,
   //   },
-  // }
+  // },
+  plugins: [
+    polar({
+      client: polarClient,
+      createCustomerOnSignUp: true,
+      use: [
+        checkout({
+          products: [
+            {
+              productId: "1b387458-9b06-4d2d-961b-b61170ff926a",
+              slug: "pro", // Custom slug for easy reference in Checkout URL, e.g. /checkout/NodeFlow-Pro
+            },
+          ],
+          successUrl: process.env.POLAR_SUCCESS_URL,
+          authenticatedUsersOnly: true,
+        }),
+        portal(),
+      ],
+    }),
+  ],
 });

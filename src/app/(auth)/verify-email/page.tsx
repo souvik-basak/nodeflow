@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
+import VerifyEmailClient from "./verify-email-client";
 
 type VerifyEmailPageProps = {
   searchParams?: Promise<{
@@ -19,27 +20,7 @@ const VerifyEmailPage = async ({ searchParams }: VerifyEmailPageProps) => {
     redirect("/?emailVerified=already");
   }
 
-  const verifyUrl = params?.verifyUrl;
-
-  if (!verifyUrl) {
-    redirect("/login?verifyInvalid=1");
-  }
-
-  try {
-    const decodedVerifyUrl = decodeURIComponent(verifyUrl);
-    const response = await fetch(decodedVerifyUrl, {
-      method: "GET",
-      headers: await headers(),
-    });
-
-    if (!response.ok) {
-      redirect("/login?verifyInvalid=1");
-    }
-
-    redirect("/login?verified=1");
-  } catch {
-    redirect("/login?verifyInvalid=1");
-  }
+  return <VerifyEmailClient verifyUrl={params?.verifyUrl} />;
 };
 
 export default VerifyEmailPage;

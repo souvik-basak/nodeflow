@@ -27,17 +27,27 @@ const VerifyEmailClient = ({ verifyUrl }: VerifyEmailClientProps) => {
         const response = await fetch(decodedVerifyUrl, {
           method: "GET",
           credentials: "include",
+          redirect: "manual",
+          cache: "no-store",
         });
 
-        const data = await response.json().catch(() => ({}));
+        const isRedirect = response.status >= 300 && response.status < 400;
+        const isOpaqueRedirect = response.type === "opaqueredirect";
+        const isManualRedirectWithoutStatus = response.status === 0;
 
-        if (!response.ok && isMounted) {
-          router.replace("/login?verifyInvalid=1");
+        if (
+          (response.ok ||
+            isRedirect ||
+            isOpaqueRedirect ||
+            isManualRedirectWithoutStatus) &&
+          isMounted
+        ) {
+          router.replace("/login?verified=1");
           return;
         }
 
         if (isMounted) {
-          router.replace("/login?verified=1");
+          router.replace("/login?verifyInvalid=1");
         }
       } catch {
         if (isMounted) {
